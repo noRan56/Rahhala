@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "294639632278",
+    "project_id": "take2me-878ea",
+    "storage_bucket": "take2me-878ea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294639632278:android:e6d5a39632b56a0bd227b7",
+        "android_client_info": {
+          "package_name": "com.example.travel_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAzS-MrC6tP-zQQBvc_4K9h7jWeRh0RJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
