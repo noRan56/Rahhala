@@ -170,31 +170,39 @@ class _ProfileState extends State<Profile> {
                             GestureDetector(
                               onTap: _updateProfile,
                               child: Container(
-                                padding: EdgeInsets.all(10.h.w),
+                                width: 300.w,
+                                height: 50.h,
+                                padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: AppText(
-                                  text: 'Update Profile',
-                                  color: Colors.white,
-                                  size: 20.sp,
+                                child: Center(
+                                  child: AppText(
+                                    text: 'Update Profile',
+                                    color: Colors.white,
+                                    size: 20.sp,
+                                  ),
                                 ),
                               ),
                             ),
-                            Spacer(),
+                            MySizedBox(height: 20),
                             GestureDetector(
                               onTap: signOutUser,
                               child: Container(
-                                padding: EdgeInsets.all(10.h.w),
+                                width: 300.w,
+                                height: 50.h,
+                                padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.red,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: AppText(
-                                  text: 'Sign Out',
-                                  color: Colors.white,
-                                  size: 20.sp,
+                                child: Center(
+                                  child: AppText(
+                                    text: 'Sign Out',
+                                    color: Colors.white,
+                                    size: 20.sp,
+                                  ),
                                 ),
                               ),
                             ),

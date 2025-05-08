@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
   Stream<List<Map<String, dynamic>>>? postStream;
   getAllPosts() async {
     postStream = await DataBaseHelper().getPosts();
+    context.read<UserCubit>().loadUserData();
     setState(() {});
   }
 

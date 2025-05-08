@@ -8,7 +8,6 @@ import 'package:travel_app/data/cubit/user_cubit.dart';
 import 'package:travel_app/data/cubit/user_state.dart';
 import 'package:travel_app/data/repositories/database.dart';
 
-import 'package:travel_app/pages/comments._viewdart';
 
 class PostItem extends StatefulWidget {
   final Map<String, dynamic> post;
@@ -140,11 +139,7 @@ class _PostItemState extends State<PostItem> {
                   IconButton(
                     icon: Icon(Icons.comment_outlined, size: 23),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const Comments(),
-                        ),
-                      );
+                    
                     },
                   ),
                   AppText(text: 'Comment'),

@@ -41,7 +41,7 @@ class PostCubit extends Cubit<PostState> {
         'place_name': placeName,
         'description': description,
         'city_name': location,
-        'image': imagePath,
+        'image': await SharedPerferencesHelper.getUserImage(),
         'username': await SharedPerferencesHelper.getUserName(),
 
         'user_id': userId,

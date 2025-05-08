@@ -22,7 +22,7 @@ class CityPostsPage extends StatelessWidget {
     final response = await supabase
         .from('posts')
         .select()
-        .ilike('place_name', cityName)
+        .ilike('city_name', cityName)
         .order('created_at', ascending: false);
 
     return List<Map<String, dynamic>>.from(response);
