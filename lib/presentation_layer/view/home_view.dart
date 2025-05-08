@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_app/components/app_text.dart';
-import 'package:travel_app/components/height_sized_box.dart';
-import 'package:travel_app/components/my_material_btn.dart';
-import 'package:travel_app/components/post_item.dart';
-import 'package:travel_app/models/data/cubit/user_cubit.dart';
-import 'package:travel_app/models/data/cubit/user_state.dart';
-import 'package:travel_app/models/data/database.dart';
-import 'package:travel_app/models/model/shared_perferences.dart';
-import 'package:travel_app/pages/post_page.dart';
-import 'package:travel_app/pages/profile.dart';
-import 'package:travel_app/pages/top_pleces.dart';
+import 'package:travel_app/core/widgets/app_text.dart';
+import 'package:travel_app/core/widgets/height_sized_box.dart';
+import 'package:travel_app/core/widgets/loading.dart';
+import 'package:travel_app/core/widgets/my_material_btn.dart';
+import 'package:travel_app/core/widgets/post_item.dart';
+import 'package:travel_app/data/cubit/user_cubit.dart';
+import 'package:travel_app/data/cubit/user_state.dart';
+import 'package:travel_app/data/repositories/database.dart';
+import 'package:travel_app/data/repositories/shared_perferences.dart';
+import 'package:travel_app/presentation_layer/view/add_post_view.dart';
+import 'package:travel_app/presentation_layer/view/profile_view.dart';
+import 'package:travel_app/presentation_layer/view/top_pleces_view.dart';
+import 'package:travel_app/presentation_layer/widgets/all_posts_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -35,44 +37,11 @@ class _HomeState extends State<Home> {
     getAllPosts();
   }
 
-  Widget allPosts() {
-    final userId = Supabase.instance.client.auth.currentUser?.id ?? '';
-
-    return StreamBuilder<List<Map<String, dynamic>>>(
-      stream: postStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: AppText(text: 'Error: ${snapshot.error}'));
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: AppText(text: 'No posts found'));
-        }
-
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            final post = snapshot.data![index];
-            return PostItem(post: post, userId: userId);
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, userState) {
-          // Use userState.username and userState.imageUrl where needed
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -85,10 +54,10 @@ class _HomeState extends State<Home> {
                       height: MediaQuery.of(context).size.height / 2.5,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: 45,
-                        left: 20,
-                        right: 20,
+                      padding: EdgeInsets.only(
+                        top: 45.h,
+                        left: 20.w,
+                        right: 20.w,
                       ),
                       child: Row(
                         children: [
@@ -186,7 +155,7 @@ class _HomeState extends State<Home> {
                               hintText: 'Search for Your Destination 🎯 ',
                               hintStyle: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 fontFamily: 'Lato',
                               ),
                             ),
@@ -197,7 +166,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 MySizedBox(height: 30),
-                allPosts(),
+                allPosts(postStream),
               ],
             ),
           );

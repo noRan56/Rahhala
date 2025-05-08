@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_app/components/app_text.dart';
-import 'package:travel_app/models/data/cubit/user_cubit.dart';
-import 'package:travel_app/models/data/cubit/user_state.dart';
-import 'package:travel_app/models/data/database.dart';
-import 'package:travel_app/models/model/shared_perferences.dart';
-import 'package:travel_app/pages/comments.dart';
+import 'package:travel_app/core/widgets/app_text.dart';
+import 'package:travel_app/core/widgets/loading.dart';
+import 'package:travel_app/data/cubit/user_cubit.dart';
+import 'package:travel_app/data/cubit/user_state.dart';
+import 'package:travel_app/data/repositories/database.dart';
+
+import 'package:travel_app/pages/comments._viewdart';
 
 class PostItem extends StatefulWidget {
   final Map<String, dynamic> post;
@@ -24,40 +25,7 @@ class _PostItemState extends State<PostItem> {
 
   @override
   void initState() {
-    checkIfLiked();
-
     super.initState();
-  }
-
-  Future<void> checkIfLiked() async {
-    final supabase = Supabase.instance.client;
-
-    final like =
-        await supabase
-            .from('posts')
-            .select()
-            .eq('user_id', widget.userId)
-            .eq('id', widget.post['id'])
-            .maybeSingle();
-    print("Post is not liked");
-    if (like != null) {
-      setState(() {
-        isLiked = true;
-      });
-    }
-  }
-
-  Future<void> toggleLike() async {
-    final dbHelper = DataBaseHelper();
-    try {
-      await DataBaseHelper().addLike(widget.post['id'], widget.userId);
-      setState(() {
-        isLiked = !isLiked;
-      });
-    } catch (e, stack) {
-      print('❌ Error toggling like: $e');
-      print('📍 Stack: $stack');
-    }
   }
 
   @override
@@ -119,19 +87,7 @@ class _PostItemState extends State<PostItem> {
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return Container(
-                        height: 200,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value:
-                                (loadingProgress.expectedTotalBytes != null &&
-                                        loadingProgress.expectedTotalBytes! > 0)
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
-                          ),
-                        ),
-                      );
+                      return Loading();
                     },
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
@@ -176,19 +132,7 @@ class _PostItemState extends State<PostItem> {
                       isLiked ? Icons.favorite : Icons.favorite_border,
                       color: Colors.red,
                     ),
-                    onPressed: () async {
-                      try {
-                        await DataBaseHelper().addLike(
-                          widget.post['id'].toString(),
-                          widget.userId,
-                        );
-                        setState(() {
-                          isLiked = !isLiked;
-                        });
-                      } catch (e) {
-                        print('❌ Error toggling like: $e');
-                      }
-                    },
+                    onPressed: () async {},
                   ),
 
                   AppText(text: 'Like'),

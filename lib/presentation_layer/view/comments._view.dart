@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:travel_app/components/app_arrow_back.dart';
-import 'package:travel_app/components/app_text.dart';
-import 'package:travel_app/pages/home.dart';
+import 'package:travel_app/core/widgets/app_arrow_back.dart';
+import 'package:travel_app/core/widgets/app_text.dart';
+
+import 'package:travel_app/presentation_layer/view/home_view.dart';
 
 class Comments extends StatelessWidget {
   const Comments({super.key});

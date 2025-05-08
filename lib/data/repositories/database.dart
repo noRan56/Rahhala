@@ -17,12 +17,10 @@ class DataBaseHelper {
     // Create a stream controller to manage the stream
     final controller = StreamController<List<Map<String, dynamic>>>();
 
-    // Initial fetch
     _fetchPosts().then((posts) {
       controller.add(posts);
     });
 
-    // Set up realtime subscription
     final subscription = supabase
         .from('posts')
         .stream(primaryKey: ['id'])
@@ -46,37 +44,5 @@ class DataBaseHelper {
         .order('created_at', ascending: false);
 
     return List<Map<String, dynamic>>.from(response);
-  }
-
-  Future<void> addLike(String postId, String userId) async {
-    try {
-      // Check if user already liked this post
-      final existingLike =
-          await supabase
-              .from('posts')
-              .select()
-              .eq('like_id', postId)
-              .eq('user_id', userId)
-              .maybeSingle();
-
-      if (existingLike != null) {
-        // User already liked - remove like
-        await supabase
-            .from('posts')
-            .delete()
-            .eq('like_id', postId)
-            .eq('user_id', userId);
-      } else {
-        // Add new like
-        await supabase.from('posts').insert({
-          'like_id': postId,
-          'user_id': userId,
-        });
-      }
-
-      // Get updated like count (corrected Supabase count syntax)
-    } catch (e) {
-      throw Exception('Failed to update like: $e');
-    }
   }
 }

@@ -5,13 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_app/components/app_arrow_back.dart';
-import 'package:travel_app/components/app_text.dart';
-import 'package:travel_app/components/app_text_field.dart';
-import 'package:travel_app/components/height_sized_box.dart';
-import 'package:travel_app/components/image_pick.dart';
-import 'package:travel_app/models/data/cubit/post_cubit.dart';
-import 'package:travel_app/pages/home.dart';
+import 'package:travel_app/core/widgets/app_arrow_back.dart';
+
+import 'package:travel_app/core/widgets/app_text.dart';
+import 'package:travel_app/core/widgets/app_text_field.dart';
+import 'package:travel_app/core/widgets/height_sized_box.dart';
+import 'package:travel_app/core/widgets/image_pick.dart';
+import 'package:travel_app/core/widgets/loading.dart';
+import 'package:travel_app/data/cubit/post_cubit.dart';
+import 'package:travel_app/presentation_layer/view/home_view.dart';
 // ... other imports remain the same ...
 
 class PostPage extends StatefulWidget {
@@ -153,7 +155,7 @@ class _PostPageState extends State<PostPage> {
                           ),
                           MySizedBox(height: 20),
                           state is PostLoading
-                              ? const CircularProgressIndicator()
+                              ? Loading()
                               : GestureDetector(
                                 onTap: () {
                                   if (_selectedImage == null) {

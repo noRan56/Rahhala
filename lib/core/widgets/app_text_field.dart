@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -32,7 +33,7 @@ class AppTextField extends StatelessWidget {
           border: InputBorder.none,
           hintStyle: TextStyle(
             fontFamily: 'Lato',
-            fontSize: 16,
+            fontSize: 16.sp,
             color: Colors.grey,
           ),
         ),

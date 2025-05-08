@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:travel_app/models/data/cubit/user_cubit.dart';
+import 'package:travel_app/data/cubit/user_cubit.dart';
 
 class UserState extends Equatable {
   final String? username;

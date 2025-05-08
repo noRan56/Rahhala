@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:travel_app/models/data/cubit/user_state.dart';
-import 'package:travel_app/models/data/database.dart';
-import 'package:travel_app/models/model/shared_perferences.dart';
+import 'package:travel_app/data/cubit/user_state.dart';
+import 'package:travel_app/data/models/model/city_name_model.dart';
+import 'package:travel_app/data/models/post_model.dart';
+import 'package:travel_app/data/repositories/database.dart';
+import 'package:travel_app/data/repositories/shared_perferences.dart';
 
 part 'post_state.dart';
 
@@ -26,7 +28,6 @@ class PostCubit extends Cubit<PostState> {
       final userId = supabase.auth.currentUser?.id;
       if (userId == null) throw Exception('User not logged in');
 
-      // 3. Upload image to Supabase Storage
       final imageBytes = await image.readAsBytes();
       final imagePath =
           'post_images/${DateTime.now().millisecondsSinceEpoch}.jpg';
@@ -41,7 +42,7 @@ class PostCubit extends Cubit<PostState> {
         'description': description,
         'city_name': location,
         'image': imagePath,
-        'username': SharedPerferencesHelper.getUserName(),
+        'username': await SharedPerferencesHelper.getUserName(),
 
         'user_id': userId,
         'created_at': DateTime.now().toIso8601String(),
@@ -53,6 +54,23 @@ class PostCubit extends Cubit<PostState> {
       emit(PostSuccess());
     } catch (e) {
       emit(PostFailure(e.toString()));
+    }
+  }
+
+  Future<void> fetchPostsByCity(String cityName) async {
+    emit(PostLoading());
+    try {
+      final response = await supabase
+          .from('posts')
+          .select()
+          .eq('city_name', cityName)
+          .order('created_at', ascending: false);
+
+      final posts =
+          (response as List).map((e) => PostModel.fromMap(e)).toList();
+      emit(PostsLoaded(posts));
+    } catch (e) {
+      emit(PostFailure('Failed to fetch posts: $e'));
     }
   }
 }
