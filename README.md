@@ -76,3 +76,41 @@ Rahhala is a community-driven travel app built with **Flutter** and **Supabase**
    ```bash
    https://github.com/noRan56/Rahhala.git
    cd rahhala
+2. **Install dependencies**
+   ```bash
+   flutter pub get
+3. **Set up Supabase**
+     - Create a project on https://supabase.com
+
+    - Create a posts table and a storage bucket also named posts
+
+    - Enable Google Auth (OAuth) in the Supabase project
+
+    - Add your Supabase url and anonKey in lib/main.dart or a .env file
+
+4. **Run the app**
+    ```bash
+    flutter run
+
+
+## 📁 Project Structure
+    ```bash
+     lib/
+      ├── core/           # Reusable widgets
+      ├── data/
+      │   ├── cubit/            # User cubit for state management
+      │   ├── repositories/     # Supabase & local storage logic             
+      ├── presentation_layer/   # Views and UI layer
+      └── main.dart             # Entry point
+
+
+## 🙋‍♂️ Contributing
+ - Feel free to open issues or submit pull requests. Feedback and improvements are always welcome!
+
+## 📬 Contact
+  - Developed with ❤️ by [Nouran Yasser]
+  - 📧 Email: noran.nassef12@gmail.com
+  - 🔗 LinkedIn: https://www.linkedin.com/in/nouraneyasser/
+
+
+
